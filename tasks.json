@@ -1,0 +1,16 @@
+[
+    {
+        "name": "AI assignment",
+        "due_date": "2026-09-04",
+        "priority": "high",
+        "sessions": 6,
+        "created_at": "2026-09-02 16:00"
+    },
+    {
+        "name": "DSA assignment",
+        "due_date": "2026-09-08",
+        "priority": "normal",
+        "sessions": 4,
+        "created_at": "2026-09-02 16:00"
+    }
+]
