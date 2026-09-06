@@ -1,3 +1,5 @@
+
+
 import os
 import json
 import re
@@ -13,7 +15,7 @@ from memory import tasks
 from agent_trace import log
 
 
-# ============================================================
+## ============================================================
 # MICROSOFT FOUNDRY
 # ============================================================
 
@@ -23,20 +25,31 @@ api_key = os.getenv("FOUNDRY_API_KEY")
 endpoint = os.getenv("FOUNDRY_ENDPOINT")
 model = os.getenv("FOUNDRY_MODEL")
 
+# Streamlit Cloud secrets
 try:
     import streamlit as st
 
-    if not api_key and "FOUNDRY_API_KEY" in st.secrets:
-        api_key = st.secrets["FOUNDRY_API_KEY"]
-
-    if not endpoint and "FOUNDRY_ENDPOINT" in st.secrets:
-        endpoint = st.secrets["FOUNDRY_ENDPOINT"]
-
-    if not model and "FOUNDRY_MODEL" in st.secrets:
-        model = st.secrets["FOUNDRY_MODEL"]
+    api_key = st.secrets.get("FOUNDRY_API_KEY", api_key)
+    endpoint = st.secrets.get("FOUNDRY_ENDPOINT", endpoint)
+    model = st.secrets.get("FOUNDRY_MODEL", model)
 
 except Exception:
     pass
+
+if not api_key:
+    raise RuntimeError(
+        "FOUNDRY_API_KEY is not configured."
+    )
+
+if not endpoint:
+    raise RuntimeError(
+        "FOUNDRY_ENDPOINT is not configured."
+    )
+
+if not model:
+    raise RuntimeError(
+        "FOUNDRY_MODEL is not configured."
+    )
 
 client = OpenAI(
     api_key=api_key,
