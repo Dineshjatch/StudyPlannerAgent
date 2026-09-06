@@ -19,12 +19,31 @@ from agent_trace import log
 
 load_dotenv()
 
+api_key = os.getenv("FOUNDRY_API_KEY")
+endpoint = os.getenv("FOUNDRY_ENDPOINT")
+model = os.getenv("FOUNDRY_MODEL")
+
+try:
+    import streamlit as st
+
+    if not api_key and "FOUNDRY_API_KEY" in st.secrets:
+        api_key = st.secrets["FOUNDRY_API_KEY"]
+
+    if not endpoint and "FOUNDRY_ENDPOINT" in st.secrets:
+        endpoint = st.secrets["FOUNDRY_ENDPOINT"]
+
+    if not model and "FOUNDRY_MODEL" in st.secrets:
+        model = st.secrets["FOUNDRY_MODEL"]
+
+except Exception:
+    pass
+
 client = OpenAI(
-    api_key=os.getenv("FOUNDRY_API_KEY"),
-    base_url=os.getenv("FOUNDRY_ENDPOINT")
+    api_key=api_key,
+    base_url=endpoint
 )
 
-MODEL = os.getenv("FOUNDRY_MODEL")
+MODEL = model
 
 
 # ============================================================
